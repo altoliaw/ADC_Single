@@ -43,7 +43,7 @@
 ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN PV */
-
+uint16_t adcValue;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -104,6 +104,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_ADC_Start(&hadc1);
+    if (HAL_ADC_PollForConversion(&hadc1, 5) == HAL_OK) {
+        adcValue = HAL_ADC_GetValue(&hadc1);
+    }
+    
+    HAL_ADC_Stop(&hadc1);
+    HAL_GPIO_TogglePin(BLUE_LED_GPIO_Port, BLUE_LED_Pin);
+    HAL_GPIO_TogglePin(OSC_GPIO_Port, OSC_Pin);
+    HAL_Delay(200);
   }
   /* USER CODE END 3 */
 }
